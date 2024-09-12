@@ -7,7 +7,7 @@
           {% csrf_token %}
           <fieldset >
             <legend class="border-secondary-400 border-b-2 mb-4 font-semibold ">Log in</legend>
-              {{ form|crispy }}
+              {{ form.as_p }}
           </fieldset>
           <br>
           <div>

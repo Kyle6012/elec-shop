@@ -10,7 +10,7 @@
             {% csrf_token %}
             <fieldset>
                 <legend class="font-bold text-xl">Add Items to Invoice</legend>
-                {{ form|crispy }}
+                {{ form.as_p }}
             </fieldset>
             <br>
             <div class= "flex justify-evenly items-center mt-4">
