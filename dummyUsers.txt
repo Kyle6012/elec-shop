@@ -1,7 +1,0 @@
-Admin User:
-    username: Kyle
-    password: busia0010
-
-Staff User:
-    username: Mark
-    password: Electronics2

@@ -32,9 +32,9 @@
             <tr class="text-left">
                 <th >S.N</th>
                 <th>Items</th>
-                <th>Per Item Price (Rs.)</th>
+                <th>Per Item Price (Ksh.)</th>
                 <th>Quantity </th>
-                <th>Accmulated Price (Rs.) </th>
+                <th>Accmulated Price (Ksh.) </th>
                 <th>Delete</th>
             </tr>
             {% for itr in invoice_items %}
@@ -53,7 +53,7 @@
             {% endfor %}
             <tr >
                 <td colspan="3"></td>
-                <td class="font-bold">Total Amount (Rs.):</td>
+                <td class="font-bold">Total Amount (Ksh.):</td>
                 <td class="font-bold">{{invoice_dict.total}}</td>
             </tr>
         </table>

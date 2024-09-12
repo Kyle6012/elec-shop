@@ -49,7 +49,7 @@
                 <td>{{ invoice.customer_name}}</td>
                 <td>{{ invoice.created_by}}</td>
                 <td>{{ invoice.date_created}}</td>
-                <td>Rs.{{ invoice.total}}/-</td>
+                <td>Ksh.{{ invoice.total}}/-</td>
                 <td><a class="btn" href="{% url 'invoice_details' invoice.invoice_number%}">Details</a></td>
                 {% if user.is_authenticated %}
                 <td class="flex w-fit justify-between">
