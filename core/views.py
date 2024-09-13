@@ -58,7 +58,7 @@ def createproduct(request):
         product_name = request.POST.get('product_name')
         unit_price = request.POST.get('unit_price')
         f = request.FILES.get('product_image')
-        product_image = 'products_pics/'+savefile(f,'products_pics')
+        product_image = 'products_pics/'+ savefile(f,'products_pics')
         with connection.cursor() as cursor:
             cursor.execute('INSERT into core_product (product_name,unit_price,product_image) values(%s,%s,%s)',[str(product_name),int(unit_price),str(product_image)])
         messages.success(request, f'{ product_name } added.')
