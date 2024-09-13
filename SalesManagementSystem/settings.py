@@ -149,3 +149,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login/'
+CSRF_TRUSTED_ORIGINS = [
+    'https://elec-shop-mv1j.onrender.com',
+]
