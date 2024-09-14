@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'SalesManagementSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'elecshop_supposeeat',
-        'USER': 'elecshop_supposeeat',
-        'PASSWORD': '0e2723f0195d623f49d9a0946ac4d123ad025749',
-        'HOST': 'jif.h.filess.io',
-        'PORT': '3305',
+        'NAME': 'defaultdb',
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_dhQ3uqp5kQBe0K6NCUh',
+        'HOST': 'mysql-elec-shop-elec-shop.d.aivencloud.com',
+        'PORT': '27613',
     }
 }
 #DATABASES = {
