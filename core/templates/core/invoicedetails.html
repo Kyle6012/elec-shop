@@ -20,7 +20,7 @@
                 <th>Items</th>
                 <th>Unit Price(Ksh.)</th>
                 <th>Quantity </th>
-                <th>Accmulated Price (Ksh.) </th>
+                <th>Accumulated Price (Ksh.) </th>
             </tr>
             {% for itr in invoice_items %}
             <tr >
@@ -39,7 +39,7 @@
         </table>
     </div>
     {% else %}
-    <h2>Opps! No invoices in Database.😫</h2>
+    <h2>Opps! No invoices in Database.</h2>
     <hr>
     <div>
     <a  href="{% url 'dashboard' %}"> Return to Dashboard</a>

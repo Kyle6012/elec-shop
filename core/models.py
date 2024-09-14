@@ -8,6 +8,7 @@ from django.urls import reverse
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
     unit_price = models.PositiveIntegerField()
+    number_of_product = models.PositiveSmallIntegerField()
     product_image = models.ImageField(default="default_product.png", upload_to="products_pics")
     
     def __str__(self):
