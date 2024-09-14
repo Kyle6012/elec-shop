@@ -81,22 +81,22 @@ WSGI_APPLICATION = 'SalesManagementSystem.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-#DATABASES = {
- #   'default': {
-  #      'ENGINE': 'django.db.backends.mysql',
-   #     'NAME': 'salesmanagement-db',
-    #    'USER': 'dbadmin',
-     #   'PASSWORD': 'your_password',
-      #  'HOST': 'localhost',
-       # 'PORT': '3306',
-    #}
-#}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR /'db.sqlite3'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'elecshop_supposeeat',
+        'USER': 'elecshop_supposeeat',
+        'PASSWORD': '0e2723f0195d623f49d9a0946ac4d123ad025749',
+        'HOST': 'jif.h.filess.io',
+        'PORT': '3305',
     }
 }
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': BASE_DIR /'db.sqlite3'
+    #}
+#}
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
