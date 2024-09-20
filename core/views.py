@@ -153,27 +153,43 @@ def createinvoice(request):
         return redirect('addinvoiceitems',pk=current_pk)
     return render(request,"core/createinvoice.html")
 
+def dictfetchall(cursor):
+    # Helper function to return query results as a list of dictionaries
+    desc = cursor.description
+    return [
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def deleteinvoice(request,pk):
-    "delete view for invoice for given pk"
-    invoice= None
+def deleteinvoice(request, pk):
+    """Delete view for invoice for given pk."""
+    invoice = None
     with connection.cursor() as cursor:
-        cursor.execute('select * from core_invoice where invoice_number = %s',[int(pk)])
+        cursor.execute('SELECT * FROM core_invoice WHERE invoice_number = %s', [int(pk)])
         invoice = dictfetchall(cursor)[0]
+
     customer_name = invoice.get('customer_name')
 
     if request.method == 'POST':
+        # First, delete all related invoice items to avoid the foreign key constraint error
         with connection.cursor() as cursor:
-            cursor.execute(' DELETE FROM core_invoice WHERE invoice_number = %s',[int(pk)])
-        messages.success(request, f'Invoice for { customer_name } deleted.')
+            cursor.execute('DELETE FROM core_invoiceitem WHERE invoice_id = %s', [int(pk)])
+
+        # Then, delete the invoice itself
+        with connection.cursor() as cursor:
+            cursor.execute('DELETE FROM core_invoice WHERE invoice_number = %s', [int(pk)])
+
+        messages.success(request, f'Invoice for {customer_name} deleted.')
         return redirect('sales')
 
     if request.method == 'GET':
-        context= {
-            'invoice' : invoice
+        context = {
+            'invoice': invoice
         }
-        return render(request,"core/invoice_confirm_delete.html",context)  
+        return render(request, "core/invoice_confirm_delete.html", context)
+
 
 
 @login_required
@@ -213,17 +229,26 @@ def addinvoiceitems(request,pk):
     return render(request,"core/additemstoinvoice.html",context)
 
 @login_required
-def deleteinvoiceitem(request,item_pk,invoice_number):
-    "delete view for invoiceitem for given pk and invoice_number."
+def deleteinvoiceitem(request, item_pk, invoice_number):
+    """Delete view for invoice item for given pk and invoice_number."""
     if request.method == 'GET':
+        # Delete the item from the invoice
         with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM core_invoiceitem WHERE id = %s',[int(item_pk)])
+            cursor.execute('DELETE FROM core_invoiceitem WHERE id = %s', [int(item_pk)])
             messages.success(request, 'Item deleted.')
+
+        # Recalculate the total for the invoice
         with connection.cursor() as cursor:
-            cursor.execute('select sum(accumulated) as total from core_invoiceitem where invoice_id = %s ',[int(invoice_number)])
+            cursor.execute('SELECT SUM(accumulated) AS total FROM core_invoiceitem WHERE invoice_id = %s', [int(invoice_number)])
             total = cursor.fetchone()[0]
-            cursor.execute('update core_invoice set total = %s where invoice_number = %s',[int(total),int(invoice_number)])
-        return redirect('addinvoiceitems',pk=invoice_number)
+
+            # Handle the case where total is None (no more items for the invoice)
+            if total is None:
+                total = 0
+
+            cursor.execute('UPDATE core_invoice SET total = %s WHERE invoice_number = %s', [int(total), int(invoice_number)])
+
+        return redirect('addinvoiceitems', pk=invoice_number)
 
 @login_required
 def invoicedetail(request,pk):
