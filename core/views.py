@@ -268,13 +268,22 @@ def addinvoiceitems(request, pk):
                     quantity = cleaned_dict['quantity']
                     accumulated = unit_price * quantity
 
+                    # Fetch initial stock from the Product model
+                    initial_stock = item.stock
+
                     # Update stock and create invoice item
-                    sales_record, created = SalesRecord.objects.get_or_create(product=item)
+                    sales_record, created = SalesRecord.objects.get_or_create(
+                        product=item,
+                        defaults={'initial_stock': initial_stock, 'remaining_stock': initial_stock}
+                    )
+                    
+                    # Check if there's enough stock
                     if sales_record.remaining_stock >= quantity:
                         sales_record.remaining_stock -= quantity
                         sales_record.sold_quantity += quantity
                         sales_record.save()
 
+                        # Add invoice item
                         with connection.cursor() as cursor:
                             cursor.execute(
                                 'INSERT INTO core_invoiceitem (quantity, accumulated, invoice_id, item_id) VALUES (%s, %s, %s, %s)',
