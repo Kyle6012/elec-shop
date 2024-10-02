@@ -1,0 +1,74 @@
+{% extends "core/base.html" %}
+{% block content %}
+{% load static %}
+    <style>
+        /* Inline styles for table formatting (or move to your CSS file) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .container {
+            margin: 20px;
+        }
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title">Sales Records</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Initial stock</th>
+                <th>Remaining stock</th>
+                <th>Sold Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if sales_records %}
+                {% for record in sales_records %}
+                <tr>
+                    <td>{{ record.product.product_name }}</td>
+                    <td>{{ record.product.category.name }}</td>
+                    <td>{{ record.initial_stock }}</td>
+                    <td>{{ record.remaining_stock }}</td>
+                    <td>{{ record.sold_quantity }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">No sales records available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Create Sales Record</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select name="category" id="category" class="form-control" required>
+                <option value="">Select a Category</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="product">Product:</label>
+            <select name="product" id="product" class="form-control" required>
+                <option value="">Select a Product</option>
+                {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.product_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="initial_stock">Initial stock:</label>
+            <input type="number" name="initial_stock" id="initial_stock" class="form-control" required min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="remaining_stock">Remaining stock:</label>
+            <input type="number" name="remaining_stock" id="remaining_stock" class="form-control" required min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="sold_quantity">Sold Quantity:</label>
+            <input type="number" name="sold_quantity" id="sold_quantity" class="form-control" required min="0">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Sales Record</button>
+        <a href="{% url 'sales_record' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

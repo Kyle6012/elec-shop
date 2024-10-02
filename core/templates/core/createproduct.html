@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% block content %}
 {% load static %}
-<header class="text-center pt-6 relative ">
+<header class="text-center pt-6 relative">
   <h1 class="text-3xl font-bold">Create Product</h1>
   <br />
 </header>
@@ -10,16 +10,38 @@
   <div>
     <h2 class="font-bold text-2xl text-center">Add Products</h2>
     <div class="m-4">
-      <form method="POST" enctype=multipart/form-data>
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset>
-        <label for="product_name">Product name</label>
-        <input type="text" class="text-field" name="product_name" id="">
-        <label for="unit_price">Unit Price</label>
-        <input type="number" class="text-field" min="0" name="unit_price" id="">
-        <label for="product_image">Product Image</label>
-        <input type="file" class="file-ip" accept="image/*" name="product_image" id="">
+          <!-- Product Name -->
+          <label for="product_name">Product Name</label>
+          <input type="text" class="text-field" name="product_name" id="product_name" required>
+          
+          <!-- Unit Price -->
+          <label for="unit_price">Unit Price</label>
+          <input type="number" class="text-field" name="unit_price" id="unit_price" min="0" required>
+
+          <!-- stock Quantity -->
+          <label for="product_quantity">Stock Quantity</label> <!-- Updated label -->
+          <input type="number" class="text-field" name="stock" id="product_quantity" min="1" required> <!-- Updated name and id -->
+          
+          <!-- Category Dropdown -->
+          <label for="product_category">Category</label>
+          <select name="category_id" id="product_category" class="text-field" required>
+            <option value="" disabled selected>Select Category</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        
+        
+          
+          <!-- Product Image -->
+          <label for="product_image">Product Image</label>
+          <input type="file" class="file-ip" accept="image/*" name="product_image" id="product_image" required>
         </fieldset>
+
+        <!-- Submit Button -->
         <button type="submit" class="btn mt-5">Add</button>
       </form>
     </div>
