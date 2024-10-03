@@ -269,7 +269,7 @@ def addinvoiceitems(request, pk):
                     accumulated = unit_price * quantity
 
                     # Fetch initial stock from the Product model
-                    initial_stock = item.stock
+                    initial_stock = item.product_quantity
 
                     # Update stock and create invoice item
                     sales_record, created = SalesRecord.objects.get_or_create(
